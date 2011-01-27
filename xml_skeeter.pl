@@ -45,7 +45,7 @@ foreach my $post (@$post_ref) {
 $final_obj->{'items'} = \@links_array;
 
 open (OUTFILE, "> " . $outfile_path . "/" . JSON_OUTFILE) or die "Couldn't open json outfile \"" . JSON_OUTFILE . "\"\n";
-print OUTFILE "calback(" . encode_json($final_obj) . ", null);\n";
+print OUTFILE "callback(" . encode_json($final_obj) . ", null);\n";
 close(OUTFILE);
 
 
