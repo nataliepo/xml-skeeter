@@ -38,7 +38,18 @@ foreach my $post (@$post_ref) {
    my $condensed;
    $condensed->{'title'} = $post->{'title'};
    $condensed->{'link'}  = $post->{'link'};
-   $condensed->{'pubDate'}  = $post->{'pubDate'};
+   
+   # clean up the pubdate a little.
+   # before: Thu, 27 Jan 2011 00:02:08 +0000
+   # after: Jan 27, 2011
+   my $pubdate = $post->{'pubDate'};
+   if ($pubdate =~ m/^([A-Za-z]{3}),\s*([\d]+)\s*([A-Za-z]+)\s*([\d]{4})/) {
+      $pubdate = $3 . " " . $2 . ", " . $4;
+   }
+   else {
+      print "Pubdate $pubdate doesn't match.\n";
+   }
+   $condensed->{'pubDate'}  = $pubdate;
    
    push (@links_array, $condensed);
 }
