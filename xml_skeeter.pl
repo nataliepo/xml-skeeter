@@ -7,11 +7,12 @@ use JSON;
 
 use constant JSON_OUTFILE => 'feed.json';
 
-die "Usage: $0 'http://full/url/to/your/xml/feed saved_file_name.html'\n" 
-   if (!$ARGV[0] || !$ARGV[1]);
+die "Usage: $0 'http://full/url/to/your/xml/feed saved_file_name.html /path/to/outfile/'\n" 
+   if (!$ARGV[0] || !$ARGV[1] || !$ARGV[2]);
 
 my $url = $ARGV[0];
 my $input_file = $ARGV[1];
+my $outfile_path = $ARGV[2];
 
 if (! -e $input_file) {
    my $result = `wget $url`;
@@ -43,7 +44,7 @@ foreach my $post (@$post_ref) {
 }
 $final_obj->{'items'} = \@links_array;
 
-open (OUTFILE, "> " . JSON_OUTFILE) or die "Couldn't open json outfile \"" . JSON_OUTFILE . "\"\n";
+open (OUTFILE, "> " . $outfile_path . "/" . JSON_OUTFILE) or die "Couldn't open json outfile \"" . JSON_OUTFILE . "\"\n";
 print OUTFILE encode_json($final_obj) . "\n";
 close(OUTFILE);
 
