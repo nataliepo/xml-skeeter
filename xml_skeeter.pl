@@ -5,7 +5,7 @@ use Data::Dumper;
 use XML::Simple;
 use JSON;
 
-use constant JSON_OUTFILE => 'feed.json';
+use constant JSON_OUTFILE => 'feed.js';
 
 die "Usage: $0 'http://full/url/to/your/xml/feed saved_file_name.html /path/to/outfile/'\n" 
    if (!$ARGV[0] || !$ARGV[1] || !$ARGV[2]);
@@ -45,7 +45,7 @@ foreach my $post (@$post_ref) {
 $final_obj->{'items'} = \@links_array;
 
 open (OUTFILE, "> " . $outfile_path . "/" . JSON_OUTFILE) or die "Couldn't open json outfile \"" . JSON_OUTFILE . "\"\n";
-print OUTFILE encode_json($final_obj) . "\n";
+print OUTFILE "calback(" . encode_json($final_obj) . ", null);\n";
 close(OUTFILE);
 
 
